@@ -1,20 +1,25 @@
-name: Python Application Delivery Pipeline
+name: mdTestesanaRGabrens
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   install-pip-deps:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
+      - uses: actions/checkout@v4
+      - name: Install Python dependencies
         run: pip install -r requirements.txt
 
   deploy-to-dev:
     needs: install-pip-deps
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Deploy to Dev
         run: echo "Deploying to Dev environment"
 
@@ -22,7 +27,7 @@ jobs:
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run tests on Dev
         run: echo "Running tests on Dev environment"
 
@@ -30,7 +35,7 @@ jobs:
     needs: tests-on-dev
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Deploy to Staging
         run: echo "Deploying to Staging environment"
 
@@ -38,7 +43,7 @@ jobs:
     needs: deploy-to-staging
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run tests on Staging
         run: echo "Running tests on Staging environment"
 
@@ -46,7 +51,7 @@ jobs:
     needs: tests-on-staging
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Deploy to Pre-prod
         run: echo "Deploying to Pre-prod environment"
 
@@ -54,7 +59,7 @@ jobs:
     needs: deploy-to-preprod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run tests on Pre-prod
         run: echo "Running tests on Pre-prod environment"
 
@@ -62,7 +67,7 @@ jobs:
     needs: tests-on-preprod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Deploy to Production
         run: echo "Deploying to Production environment"
 
@@ -70,6 +75,6 @@ jobs:
     needs: deploy-to-prod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run tests on Production
         run: echo "Running tests on Production environment"
