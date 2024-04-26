@@ -1,2 +1,2 @@
 # md testesanas kursa
-Majas darbsa
+Majas darbs
