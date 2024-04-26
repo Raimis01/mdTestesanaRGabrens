@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: echo "Installing dependencies"
 
   deploy-to-dev:
     needs: install-pip-deps
