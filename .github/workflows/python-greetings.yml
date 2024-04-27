@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: pip3 install -r requirements.txt
-        working-directory: ./python-greetings
+        working-directory: python-greetings
         shell: pwsh
 
   deploy-to-dev:
@@ -39,19 +39,20 @@ jobs:
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
         with:
-          repository: mtararujs/python-greetings
+          # repository: mtararujs/python-greetings
           path: python-greetings
 
       - name: Stop existing service
-        run: |
-          pm2 delete greetings-app-dev
-          if (-not $?) { Exit 0 }
+        run: pm2 delete greetings-app-dev || true
+          #  |
+          # pm2 delete greetings-app-dev
+          # if (-not $?) { Exit 0 }
         shell: pwsh
         working-directory: python-greetings
       
 
       - name: Start server for Dev environment
-        run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev -- --port 7001
         shell: pwsh
         working-directory: python-greetings
       
@@ -75,17 +76,10 @@ jobs:
         run: npm install
         shell: pwsh
         working-directory: course-js-api-framework
-  
-      - name: Set Environment Variables
-        run: |
-          echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
-          echo "NODE_ENV=development" >> $GITHUB_ENV
+
   
       - name: Run tests for Dev environment
-        run: npm run greetings
-        env:
-          NODE_ENV: development
-          API_URL: http://localhost:7001
+        run: npm run test greetings_dev
         shell: pwsh
         working-directory: course-js-api-framework
         
