@@ -92,7 +92,7 @@ jobs:
         working-directory: ./python-greetings
 
       - name: Start new service
-        run: pm2 start app.py --name greetings-app-staging -- --port 7002
+        run: pm2 start app.py --name greetings-app-staging -- -- --port 7002
         shell: powershell
         working-directory: ./python-greetings
 
@@ -130,7 +130,7 @@ jobs:
         working-directory: ./python-greetings
 
       - name: Start new service
-        run: pm2 start app.py --name greetings-app-preprod -- --port 7003
+        run: pm2 start app.py --name greetings-app-preprod -- -- --port 7003
         shell: powershell
         working-directory: ./python-greetings
 
@@ -168,7 +168,7 @@ jobs:
         working-directory: ./python-greetings
 
       - name: Start new service
-        run: pm2 start app.py --name greetings-app-prod -- --port 7004
+        run: pm2 start app.py --name greetings-app-prod -- -- --port 7004
         shell: powershell
         working-directory: ./python-greetings
 
