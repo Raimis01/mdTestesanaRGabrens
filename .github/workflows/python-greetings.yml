@@ -54,13 +54,7 @@ jobs:
         run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
         shell: powershell
         working-directory: python-greetings
-
-      - name: Verify Application is Running
-        run: pm2 show greetings-app-dev
-        working-directory: python-greetings
-        shell: powershell
-      
-      
+    
 
   tests-on-dev:
     name: tests on dev
@@ -75,12 +69,6 @@ jobs:
         with:
           repository: mtararujs/course-js-api-framework
           path: course-js-api-framework
-
-      - name: Verify Application is Running
-        run: pm2 show greetings-app-dev
-        working-directory: python-greetings
-        shell: powershell
-        
 
       - name: Install npm dependencies
         run: npm install

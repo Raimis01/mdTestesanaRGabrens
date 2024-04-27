@@ -1,0 +1,35 @@
+inputs:
+  port:
+    description: 'Port for node app to run'
+    default: 1010
+  environment:
+    description: 'Env for node app'
+    default: 'DEV'
+
+runs:
+  using: "composite"
+  steps:
+    - name: ... build success ...
+      run: echo Start to deploy to ${{ inputs.enviroment }} ..
+      shell: bash
+      
+    - name: install dependencies
+      run: npm install
+      shell: bash
+
+    - name: Install pm2
+      run: sudo npm install -g pm2
+      shell: bash
+
+
+    # - name: Delete services
+    #   run: pm2 delete ${{ inputs.enviroment }}
+    #   shell: bash
+
+    - name: Start services
+      run: pm2 start -n ${{ inputs.enviroment }} index.js -- ${{ inputs.port }}
+      shell: bash
+
+    - name: Check services
+      run: pm2 list
+      shell: bash
