@@ -35,11 +35,6 @@ jobs:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
-      # - name: Checkout delivery pipeline
-      #   uses: actions/checkout@v3.5.2
-      #   with:
-      #     ref: 'main'
-
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
         with:
@@ -55,7 +50,7 @@ jobs:
       
 
       - name: Start service in development environment
-        run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev -- --port 7001
         shell: powershell
         working-directory: ./python-greetings
       
@@ -67,11 +62,6 @@ jobs:
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
-
-      # - name: Checkout delivery pipeline
-      #   uses: actions/checkout@v3.5.2
-      #   with:
-      #     ref: 'main'
 
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
@@ -86,126 +76,125 @@ jobs:
 
       - name: Run tests for Dev environment
         run: npm run greetings greetings_dev
-        
         shell: powershell
         working-directory: ./course-js-api-framework
 
-  deploy-to-staging:
-    name: deploy to staging
-    needs: tests-on-dev
-    runs-on: self-hosted
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+  # deploy-to-staging:
+  #   name: deploy to staging
+  #   needs: tests-on-dev
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout main repository
+  #       uses: actions/checkout@v3.5.2
 
-      - name: Checkout delivery pipeline
-        uses: actions/checkout@v3.5.2
-        with:
-          ref: 'main'
+  #     - name: Checkout delivery pipeline
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         ref: 'main'
 
-      - name: Clone python-greetings repository
-        uses: actions/checkout@v3.5.2
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
+  #     - name: Clone python-greetings repository
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         repository: mtararujs/python-greetings
+  #         path: python-greetings
 
-      - name: Stop existing service
-        run: |
-          pm2 delete greetings-app-staging
-          if (-not $?) { Exit 0 }
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Stop existing service
+  #       run: |
+  #         pm2 delete greetings-app-staging
+  #         if (-not $?) { Exit 0 }
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-      - name: Start new service
-        run: pm2 start app.py --name greetings-app-staging -- -- --port 7002
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Start new service
+  #       run: pm2 start app.py --name greetings-app-staging -- -- --port 7002
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-  tests-on-staging:
-    name: tests on staging
-    needs: deploy-to-staging
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3.5.2
-      - name: Run tests on Staging
-        run: echo "Running tests on Staging environment"
+  # tests-on-staging:
+  #   name: tests on staging
+  #   needs: deploy-to-staging
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v3.5.2
+  #     - name: Run tests on Staging
+  #       run: echo "Running tests on Staging environment"
 
-  deploy-to-preprod:
-    name: deploy to preprod
-    needs: tests-on-staging
-    runs-on: self-hosted
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+  # deploy-to-preprod:
+  #   name: deploy to preprod
+  #   needs: tests-on-staging
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout main repository
+  #       uses: actions/checkout@v3.5.2
 
-      - name: Checkout delivery pipeline
-        uses: actions/checkout@v3.5.2
-        with:
-          ref: 'main'
+  #     - name: Checkout delivery pipeline
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         ref: 'main'
 
-      - name: Clone python-greetings repository
-        uses: actions/checkout@v3.5.2
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
+  #     - name: Clone python-greetings repository
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         repository: mtararujs/python-greetings
+  #         path: python-greetings
 
-      - name: Stop existing service
-        run: |
-          pm2 delete greetings-app-preprod
-          if (-not $?) { Exit 0 }
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Stop existing service
+  #       run: |
+  #         pm2 delete greetings-app-preprod
+  #         if (-not $?) { Exit 0 }
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-      - name: Start new service
-        run: pm2 start app.py --name greetings-app-preprod -- -- --port 7003
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Start new service
+  #       run: pm2 start app.py --name greetings-app-preprod -- -- --port 7003
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-  tests-on-preprod:
-    name: tests on preprod
-    needs: deploy-to-preprod
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3.5.2
-      - name: Run tests on Pre-prod
-        run: echo "Running tests on Pre-prod environment"
+  # tests-on-preprod:
+  #   name: tests on preprod
+  #   needs: deploy-to-preprod
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v3.5.2
+  #     - name: Run tests on Pre-prod
+  #       run: echo "Running tests on Pre-prod environment"
 
-  deploy-to-prod:
-    name: deploy to prod
-    needs: tests-on-preprod
-    runs-on: self-hosted
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+  # deploy-to-prod:
+  #   name: deploy to prod
+  #   needs: tests-on-preprod
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout main repository
+  #       uses: actions/checkout@v3.5.2
 
-      - name: Checkout delivery pipeline
-        uses: actions/checkout@v3.5.2
-        with:
-          ref: 'main'
+  #     - name: Checkout delivery pipeline
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         ref: 'main'
 
-      - name: Clone python-greetings repository
-        uses: actions/checkout@v3.5.2
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
+  #     - name: Clone python-greetings repository
+  #       uses: actions/checkout@v3.5.2
+  #       with:
+  #         repository: mtararujs/python-greetings
+  #         path: python-greetings
 
-      - name: Stop existing service
-        run: |
-          pm2 delete greetings-app-prod
-          if (-not $?) { Exit 0 }
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Stop existing service
+  #       run: |
+  #         pm2 delete greetings-app-prod
+  #         if (-not $?) { Exit 0 }
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-      - name: Start new service
-        run: pm2 start app.py --name greetings-app-prod -- -- --port 7004
-        shell: powershell
-        working-directory: ./python-greetings
+  #     - name: Start new service
+  #       run: pm2 start app.py --name greetings-app-prod -- -- --port 7004
+  #       shell: powershell
+  #       working-directory: ./python-greetings
 
-  tests-on-prod:
-    name: tests on prod
-    needs: deploy-to-prod
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3.5.2
-      - name: Run tests on Production
-        run: echo "Running tests on Production environment"
+  # tests-on-prod:
+  #   name: tests on prod
+  #   needs: deploy-to-prod
+  #   runs-on: self-hosted
+  #   steps:
+  #     - uses: actions/checkout@v3.5.2
+  #     - name: Run tests on Production
+  #       run: echo "Running tests on Production environment"
