@@ -35,10 +35,10 @@ jobs:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
-      - name: Checkout delivery pipeline
-        uses: actions/checkout@v3.5.2
-        with:
-          ref: 'main'
+      # - name: Checkout delivery pipeline
+      #   uses: actions/checkout@v3.5.2
+      #   with:
+      #     ref: 'main'
 
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
@@ -68,10 +68,10 @@ jobs:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
-      - name: Checkout delivery pipeline
-        uses: actions/checkout@v3.5.2
-        with:
-          ref: 'main'
+      # - name: Checkout delivery pipeline
+      #   uses: actions/checkout@v3.5.2
+      #   with:
+      #     ref: 'main'
 
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
@@ -85,9 +85,7 @@ jobs:
         working-directory: ./course-js-api-framework
 
       - name: Run tests for Dev environment
-        # run: npm run greetings greetings_dev
-        run: |
-          node node_modules/mocha/bin/mocha 'tests/scenarios/greetings/*.js' --reporter mochawesome --timeout 20000
+        run: npm run greetings greetings_dev
         
         shell: powershell
         working-directory: ./course-js-api-framework
