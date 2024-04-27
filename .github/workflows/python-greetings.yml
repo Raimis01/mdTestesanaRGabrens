@@ -63,7 +63,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+        uses: acations/checkout@v3.5.2
   
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
@@ -76,13 +76,19 @@ jobs:
         shell: pwsh
         working-directory: course-js-api-framework
   
+      - name: Set Environment Variables
+        run: |
+          echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
+          echo "NODE_ENV=development" >> $GITHUB_ENV
+  
       - name: Run tests for Dev environment
-        run: npm run greetings -- dev
+        run: npm run greetings
         env:
           NODE_ENV: development
           API_URL: http://localhost:7001
         shell: pwsh
         working-directory: course-js-api-framework
+        
         
       
       
