@@ -81,10 +81,12 @@ jobs:
 
       - name: Install npm dependencies
         run: npm install
+        shell: powershell
         working-directory: ./course-js-api-framework
 
       - name: Run tests for Dev environment
         run: npm run greetings greetings_dev
+        shell: powershell
         working-directory: ./course-js-api-framework
 
   deploy-to-staging:
