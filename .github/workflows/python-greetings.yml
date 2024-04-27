@@ -40,8 +40,8 @@ jobs:
           path: python-greetings
 
       - name: Stop existing service
-        # run: pm2 delete greetings-app-dev || true
-        run: pm2 delete greetings-app-dev & set "errorlevel=0" 
+        run: pm2 delete greetings-app-dev || EXIT /B 0
+        shell: powershell
         working-directory: ./python-greetings
 
       - name: Start new service
