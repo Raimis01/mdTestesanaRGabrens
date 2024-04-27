@@ -42,6 +42,7 @@ jobs:
       - name: Ensure PM2 is installed
         run: npm install pm2@latest -g
         shell: powershell
+        working-directory: ./python-greetings
 
       - name: Stop existing service
         run: |
