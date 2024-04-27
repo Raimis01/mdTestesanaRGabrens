@@ -83,8 +83,13 @@ jobs:
         run: npm install
         working-directory: ./course-js-api-framework
 
+      - name: Check service status
+        run: pm2 show greetings-app-dev
+        shell: powershell
+        working-directory: ./python-greetings
+
       - name: Run tests for Dev environment
-        run: npm run greetings greetings_dev
+        run: npm run greetings
         working-directory: ./course-js-api-framework
 
   deploy-to-staging:
