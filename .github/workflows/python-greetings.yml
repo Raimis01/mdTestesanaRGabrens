@@ -54,10 +54,11 @@ jobs:
         working-directory: ./python-greetings-dev
       
 
-      - name: Start new service
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
-        # shell: powershell
+      - name: Start service in development environment
+        run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
+        shell: powershell
         working-directory: ./python-greetings-dev
+      
 
   tests-on-dev:
     needs: deploy-to-dev
