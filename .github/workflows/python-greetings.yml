@@ -39,6 +39,10 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
+      - name: Ensure PM2 is installed
+        run: npm install pm2@latest -g
+        shell: powershell
+
       - name: Stop existing service
         run: |
           pm2 delete greetings-app-dev
