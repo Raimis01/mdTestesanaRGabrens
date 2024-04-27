@@ -51,7 +51,7 @@ jobs:
       
 
       - name: Start server for Dev environment
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev
         shell: powershell
         working-directory: python-greetings
       
@@ -76,9 +76,9 @@ jobs:
         shell: powershell
         working-directory: course-js-api-framework
   
-      - name: Set Environment Variables for Dev
-        run: echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
-        shell: bash
+      # - name: Set Environment Variables for Dev
+      #   run: echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
+      #   shell: bash
   
       - name: Run tests for Dev environment
         run: npm run greetings
