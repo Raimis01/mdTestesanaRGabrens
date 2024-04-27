@@ -40,7 +40,8 @@ jobs:
           path: python-greetings
 
       - name: Stop existing service
-        run: pm2 delete greetings-app-dev || true
+        # run: pm2 delete greetings-app-dev || true
+        run: pm2 delete greetings-app-dev; if ($LASTEXITCODE -ne 0) { $true }
         working-directory: ./python-greetings
 
       - name: Start new service
