@@ -32,12 +32,14 @@ jobs:
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
+        with:
+          ref: 'main'
 
-      - name: Checkout python-greetings repository
+      - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
         with:
           repository: mtararujs/python-greetings
-          path: python-greetings
+          path: python-greetings-dev
 
       - name: Ensure PM2 is installed
         run: npm install pm2@latest -g
@@ -49,13 +51,13 @@ jobs:
           pm2 delete greetings-app-dev
           if (-not $?) { Exit 0 }
         shell: powershell
-        working-directory: ./python-greetings
+        working-directory: ./python-greetings-dev
       
 
       - name: Start new service
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
-        shell: powershell
-        working-directory: ./python-greetings
+        # shell: powershell
+        working-directory: ./python-greetings-dev
 
   tests-on-dev:
     needs: deploy-to-dev
