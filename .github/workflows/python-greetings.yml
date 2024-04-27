@@ -77,16 +77,22 @@ jobs:
 
       - name: Set Environment Variables for Dev
         run: |
-          echo "API_URL=http://localhost:7001" | Out-File -Append -Encoding ASCII $Env:GITHUB_ENV
+          $env:API_URL="http://localhost:7001"
+          [Environment]::SetEnvironmentVariable("API_URL", "http://localhost:7001", "Process")
         shell: powershell
 
+      - name: Display environment variables
+        run: |
+          Get-ChildItem Env:
+        shell: powershell
 
       - name: Run tests for Dev environment
-        run: npm run greetings greetings_dev
+        run: npm run greetings
         shell: powershell
         working-directory: course-js-api-framework
         env:
           NODE_ENV: development
+
 
 
   # deploy-to-staging:
