@@ -38,7 +38,7 @@ jobs:
       run: |
         echo "Deploying application to development environment..."
         pm2 delete greetings-app-dev 2>$null
-        pm2 start app.py --name greetings-app-dev -- --port 7001
+        pm2 start app.py --name greetings-app-dev -- -- --port 7001
       shell: pwsh
       working-directory: ${{ github.workspace }}
 
