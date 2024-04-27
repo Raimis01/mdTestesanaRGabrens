@@ -76,9 +76,11 @@ jobs:
         shell: powershell
         working-directory: course-js-api-framework
   
-      # - name: Set Environment Variables for Dev
-      #   run: echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
-      #   shell: bash
+      - name: Set Environment Variables for Dev
+        run: |
+          echo "API_URL=http://localhost:3000" | Out-File -Append -Encoding ASCII $Env:GITHUB_ENV
+        shell: powershell
+      
   
       - name: Run tests for Dev environment
         run: npm run greetings
