@@ -63,7 +63,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
-        uses: acations/checkout@v3.5.2
+        uses: actions/checkout@v3.5.2
   
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
