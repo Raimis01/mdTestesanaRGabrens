@@ -83,12 +83,14 @@ jobs:
       
   
       - name: Run tests for Dev environment
-        run: npm run greetings
+        run: |
+          $env:API_URL="http://localhost:3000"
+          npm run greetings
         shell: powershell
         working-directory: course-js-api-framework
         env:
           NODE_ENV: development
-          API_URL: http://localhost:3000
+      
       
         
 
