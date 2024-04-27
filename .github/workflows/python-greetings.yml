@@ -42,12 +42,12 @@ jobs:
       - name: Stop existing service
         run: |
           pm2 delete greetings-app-dev
-          if (-not $?) { Exit 0 }
+          if (-not $?) { Write-Output "Process not found, continuing..." }
         shell: powershell
         working-directory: ./python-greetings
 
       - name: Start new service
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev --port 7001
         working-directory: ./python-greetings
 
   tests-on-dev:
