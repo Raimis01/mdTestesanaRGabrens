@@ -22,7 +22,7 @@ jobs:
         echo "Installing all required dependencies..."
         cd python-greetings
         pip3 install -r requirements.txt
-      working-directory: ${{ github.workspace }}
+      working-directory: python-greetings
 
   deploy-to-dev:
     needs: install-pip-deps
@@ -40,7 +40,7 @@ jobs:
         pm2 delete greetings-app-dev 2>$null
         pm2 start app.py --name greetings-app-dev -- -- --port 7001
       shell: pwsh
-      working-directory: ${{ github.workspace }}
+      working-directory: python-greetings
 
   tests-on-dev:
     needs: deploy-to-dev
@@ -59,4 +59,4 @@ jobs:
         npm install
         echo "Running tests on development environment..."
         npm run greetings greetings_dev
-      working-directory: ${{ github.workspace }}
+      working-directory: course-js-api-framework
