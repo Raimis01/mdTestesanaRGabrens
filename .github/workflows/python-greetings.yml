@@ -47,13 +47,13 @@ jobs:
           pm2 delete greetings-app-dev
           if (-not $?) { Exit 0 }
         shell: powershell
-        working-directory: ./python-greetings
+        working-directory: python-greetings
       
 
       - name: Start service in development environment
         run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
         shell: powershell
-        working-directory: ./python-greetings
+        working-directory: python-greetings
       
 
   tests-on-dev:
@@ -73,12 +73,12 @@ jobs:
       - name: Install npm dependencies
         run: npm install
         shell: powershell
-        working-directory: ./course-js-api-framework
+        working-directory: course-js-api-framework
 
       - name: Run tests for Dev environment
         run: npm run greetings greetings_dev
         shell: powershell
-        working-directory: ./course-js-api-framework
+        working-directory: course-js-api-framework
 
   # deploy-to-staging:
   #   name: deploy to staging
