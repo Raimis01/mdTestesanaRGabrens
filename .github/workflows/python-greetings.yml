@@ -51,7 +51,7 @@ jobs:
       
 
       - name: Start service in development environment
-        run: pm2 start app.py --name greetings-app-dev -- -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev -- --port 7001
         shell: powershell
         working-directory: python-greetings
     
@@ -63,35 +63,29 @@ jobs:
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
-
+  
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
         with:
           repository: mtararujs/course-js-api-framework
           path: course-js-api-framework
-
+  
       - name: Install npm dependencies
         run: npm install
         shell: powershell
         working-directory: course-js-api-framework
-
+  
       - name: Set Environment Variables for Dev
-        run: |
-          $env:API_URL="http://localhost:7001"
-          [Environment]::SetEnvironmentVariable("API_URL", "http://localhost:7001", "Process")
-        shell: powershell
-
-      - name: Display environment variables
-        run: |
-          Get-ChildItem Env:
-        shell: powershell
-
+        run: echo "API_URL=http://localhost:7001" >> $GITHUB_ENV
+        shell: bash
+  
       - name: Run tests for Dev environment
         run: npm run greetings
         shell: powershell
         working-directory: course-js-api-framework
         env:
           NODE_ENV: development
+        
 
 
 
