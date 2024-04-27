@@ -30,15 +30,28 @@ jobs:
     needs: install-pip-deps
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Dev
-        run: echo "Deploying to Dev environment"
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Checkout python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stop existing service
+        run: pm2 delete greetings-app-dev || true
+        working-directory: ./python-greetings
+
+      - name: Start new service
+        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        working-directory: ./python-greetings
 
   tests-on-dev:
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - name: Run tests on Dev
         run: echo "Running tests on Dev environment"
 
@@ -46,15 +59,28 @@ jobs:
     needs: tests-on-dev
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Staging
-        run: echo "Deploying to Staging environment"
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Checkout python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stop existing service
+        run: pm2 delete greetings-app-staging || true
+        working-directory: ./python-greetings
+
+      - name: Start new service
+        run: pm2 start app.py --name greetings-app-staging -- --port 7002
+        working-directory: ./python-greetings
 
   tests-on-staging:
     needs: deploy-to-staging
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - name: Run tests on Staging
         run: echo "Running tests on Staging environment"
 
@@ -62,15 +88,28 @@ jobs:
     needs: tests-on-staging
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Pre-prod
-        run: echo "Deploying to Pre-prod environment"
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Checkout python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stop existing service
+        run: pm2 delete greetings-app-preprod || true
+        working-directory: ./python-greetings
+
+      - name: Start new service
+        run: pm2 start app.py --name greetings-app-preprod -- --port 7003
+        working-directory: ./python-greetings
 
   tests-on-preprod:
     needs: deploy-to-preprod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - name: Run tests on Pre-prod
         run: echo "Running tests on Pre-prod environment"
 
@@ -78,14 +117,27 @@ jobs:
     needs: tests-on-preprod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy to Production
-        run: echo "Deploying to Production environment"
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Checkout python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stop existing service
+        run: pm2 delete greetings-app-prod || true
+        working-directory: ./python-greetings
+
+      - name: Start new service
+        run: pm2 start app.py --name greetings-app-prod -- --port 7004
+        working-directory: ./python-greetings
 
   tests-on-prod:
     needs: deploy-to-prod
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - name: Run tests on Production
         run: echo "Running tests on Production environment"
