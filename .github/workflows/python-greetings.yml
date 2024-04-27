@@ -41,7 +41,8 @@ jobs:
 
       - name: Stop existing service
         run: |
-          pm2 delete greetings-app-dev 2>$null
+          pm2 delete greetings-app-dev
+          if (-not $?) { Exit 0 }
         shell: powershell
         working-directory: ./python-greetings
 
