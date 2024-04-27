@@ -37,8 +37,9 @@ jobs:
     - name: Deploy to development environment
       run: |
         echo "Deploying application to development environment..."
-        pm2 delete greetings-app-dev || true
+        pm2 delete greetings-app-dev 2>$null
         pm2 start python-greetings/app.py --name greetings-app-dev -- --port 7001
+      shell: pwsh
       working-directory: ${{ github.workspace }}
 
   tests-on-dev:
