@@ -77,9 +77,13 @@ jobs:
         working-directory: course-js-api-framework
   
       - name: Run tests for Dev environment
-        run: npm run greetings greetings_dev
+        run: npm run greetings dev
+        env:
+          NODE_ENV: development
+          API_URL: http://localhost:7001
         shell: pwsh
         working-directory: course-js-api-framework
+        
       
       
         
