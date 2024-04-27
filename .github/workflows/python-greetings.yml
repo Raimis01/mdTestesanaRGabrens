@@ -9,6 +9,7 @@ on:
 
 jobs:
   install-pip-deps:
+    name: install pip dependencies
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
@@ -27,6 +28,7 @@ jobs:
         working-directory: ./python-greetings
 
   deploy-to-dev:
+    name: deploy to dev
     needs: install-pip-deps
     runs-on: self-hosted
     steps:
@@ -59,6 +61,7 @@ jobs:
       
 
   tests-on-dev:
+    name: tests on dev
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
@@ -85,6 +88,7 @@ jobs:
         working-directory: ./course-js-api-framework
 
   deploy-to-staging:
+    name: deploy to staging
     needs: tests-on-dev
     runs-on: self-hosted
     steps:
@@ -115,6 +119,7 @@ jobs:
         working-directory: ./python-greetings
 
   tests-on-staging:
+    name: tests on staging
     needs: deploy-to-staging
     runs-on: self-hosted
     steps:
@@ -123,6 +128,7 @@ jobs:
         run: echo "Running tests on Staging environment"
 
   deploy-to-preprod:
+    name: deploy to preprod
     needs: tests-on-staging
     runs-on: self-hosted
     steps:
@@ -153,6 +159,7 @@ jobs:
         working-directory: ./python-greetings
 
   tests-on-preprod:
+    name: tests on preprod
     needs: deploy-to-preprod
     runs-on: self-hosted
     steps:
@@ -161,6 +168,7 @@ jobs:
         run: echo "Running tests on Pre-prod environment"
 
   deploy-to-prod:
+    name: deploy to prod
     needs: tests-on-preprod
     runs-on: self-hosted
     steps:
@@ -191,6 +199,7 @@ jobs:
         working-directory: ./python-greetings
 
   tests-on-prod:
+    name: tests on prod
     needs: deploy-to-prod
     runs-on: self-hosted
     steps:
