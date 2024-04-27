@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies
         run: pip3 install -r requirements.txt
         working-directory: ./python-greetings
+        shell: pwsh
 
   deploy-to-dev:
     name: deploy to dev
