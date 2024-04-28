@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-pip-deps:
+  setuppyt:
     name: install pip dependencies
     runs-on: self-hosted
     steps:
@@ -17,11 +17,21 @@ jobs:
         # with:
         #   ref: 'main'
 
-
       - name: Create and activate virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
+
+  install-pip-deps:
+    needs: setuppyt
+    name: install pip dependencies
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+        # with:
+        #   ref: 'main'
+
 
       - name: Checkout python-greetings repository
         uses: actions/checkout@v3.5.2
