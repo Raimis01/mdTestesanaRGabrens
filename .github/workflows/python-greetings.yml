@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11.8'  # Aizstāj ar savu Python versiju
+          python-version: '3.11'  # Aizstāj ar savu Python versiju
     
       - name: Create and activate virtual environment
         run: |
