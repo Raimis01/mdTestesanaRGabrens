@@ -85,6 +85,36 @@ jobs:
       # - name: Checkout main repository
       #   uses: actions/checkout@v3.5.2
   
+      - name: Clone python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
+      - name: Stop existing service
+        run: |
+          source venv/bin/activate
+          pm2 delete greetings-app-staging || true
+        shell: bash
+        working-directory: python-greetings
+      
+
+      - name: Start server for Dev environment
+        run: |
+          source venv/bin/activate
+          pm2 start app.py --name greetings-app-dev --restart-delay=5000 --max-restarts=5 -- --port 7001
+  
+        shell: bash
+        working-directory: python-greetings 
+
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
         with:
@@ -99,11 +129,6 @@ jobs:
       - name: Install npm dependencies
         run: npm install
         shell: bash
-        working-directory: course-js-api-framework
-
-  
-      - name: Check PM2 status
-        run: pm2 status
         working-directory: course-js-api-framework
       
       - name: Run tests for Dev environment
