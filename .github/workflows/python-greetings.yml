@@ -43,8 +43,8 @@ jobs:
     needs: install-pip-deps
     runs-on: self-hosted
     steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+      # - name: Checkout main repository
+      #   uses: actions/checkout@v3.5.2
 
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
@@ -82,8 +82,8 @@ jobs:
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
+      # - name: Checkout main repository
+      #   uses: actions/checkout@v3.5.2
   
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
