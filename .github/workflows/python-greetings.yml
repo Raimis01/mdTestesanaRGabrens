@@ -30,6 +30,13 @@ jobs:
           source venv/bin/activate
         working-directory: python-greetings
 
+      - name: Install dependencies
+        run: |
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
   install-pip-deps:
     needs: setuppyt
     name: install pip dependencies
@@ -43,12 +50,7 @@ jobs:
 
       
 
-      - name: Install dependencies
-        run: |
-          source venv/bin/activate
-          pip install -r requirements.txt
-        working-directory: python-greetings
-        shell: bash
+      
 
   deploy-to-dev:
     name: deploy to dev
