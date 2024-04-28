@@ -129,6 +129,13 @@ jobs:
       #     URL: http://localhost:7001
       #   working-directory: course-js-api-framework
 
+      - name: Echo Environment Variables
+        run: |
+          echo "URL: $URL"
+          echo "NODE_ENV: $NODE_ENV"
+        working-directory: course-js-api-framework
+
+
       - name: Run tests for Dev environment
         run: |
           npm run greetings
