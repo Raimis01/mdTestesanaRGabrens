@@ -1,3 +1,10 @@
+name: 'Setup and Install Dependencies'
+description: 'Setup Python environment and install dependencies'
+inputs:
+  working-directory:
+    description: 'Working directory to set up and install dependencies'
+    required: true
+
 runs:
   using: 'composite'
   steps:
