@@ -91,7 +91,7 @@ jobs:
 
   deploy-to-staging:
     name: deploy to staging
-    needs: deploy-to-dev
+    needs: test-on-dev
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
@@ -149,7 +149,7 @@ jobs:
 
   deploy-to-preprod:
     name: deploy to preprod
-    needs: deploy-to-staging
+    needs: test-on-staging
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
@@ -208,7 +208,7 @@ jobs:
 
   deploy-to-prod:
     name: deploy to prod
-    needs: deploy-to-preprod
+    needs: test-on-preprod
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
