@@ -102,10 +102,18 @@ jobs:
         working-directory: course-js-api-framework
 
   
-      - name: Run tests for Dev environment
-        run: npm run greetings greetings_dev
-        shell: bash
+      - name: Check PM2 status
+        run: pm2 status
         working-directory: course-js-api-framework
+      
+      - name: Run tests for Dev environment
+        run: |
+          export NODE_ENV=development
+          npm run greetings
+        env:
+          URL: http://localhost:7001  # Assuming your server runs at this URL
+        working-directory: course-js-api-framework
+      
         
         
       
