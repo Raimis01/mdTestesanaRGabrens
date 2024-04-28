@@ -136,7 +136,8 @@ jobs:
           export NODE_ENV=development
           npm run greetings
         env:
-          URL: http://localhost:7001  # Assuming your server runs at this URL
+          NODE_ENV: development
+          URL: http://localhost:7001  # Make sure this is the correct URL
         working-directory: course-js-api-framework
       
         
