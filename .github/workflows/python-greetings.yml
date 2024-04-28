@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: pip3 install -r requirements.txt
         working-directory: python-greetings
-        shell: pwsh
+        shell: powershell
 
   deploy-to-dev:
     name: deploy to dev
@@ -46,13 +46,13 @@ jobs:
         run: |
           pm2 delete greetings-app-dev
           if (-not $?) { Exit 0 }
-        shell: pwsh
+        shell: powershell
         working-directory: python-greetings
       
 
       - name: Start server for Dev environment
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
-        shell: bash
+        shell: powershell
         working-directory: python-greetings
       
     
@@ -73,13 +73,13 @@ jobs:
   
       - name: Install npm dependencies
         run: npm install
-        shell: pwsh
+        shell: powershell
         working-directory: python-greetings
 
   
       - name: Run tests for Dev environment
         run: npm run test greetings_dev
-        shell: pwsh
+        shell: powershell
         working-directory: python-greetings
         
         
