@@ -40,6 +40,10 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
+      - name: Install PM2
+        run: npm install pm2@latest -g
+        shell: bash
+
       - name: Stop existing application
         run: pm2 delete greetings-app-dev || true
         working-directory: python-greetings
