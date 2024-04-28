@@ -86,7 +86,7 @@ jobs:
 
   
       - name: Run tests for Dev environment
-        run: npm run test greetings_dev
+        run: npm run greetings greetings_dev
         shell: bash
         working-directory: course-js-api-framework
         
