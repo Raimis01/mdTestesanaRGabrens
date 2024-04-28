@@ -1,0 +1,205 @@
+name: mdTestesanaRGabrens
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  install-pip-deps:
+    name: install pip dependencies
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Checkout python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      # - name: Install Dependencies
+      #   uses: ./.github/actions/build
+      #   with:
+      #     working-directory: 'python-greetings'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+  
+
+  deploy-to-dev:
+    name: deploy to dev
+    needs: install-pip-deps
+    runs-on: self-hosted
+
+    # steps:
+    #   - name: Checkout Repository
+    #     uses: actions/checkout@v3.5.2
+
+    #   - name: Clone python-greetings repository
+    #     uses: actions/checkout@v3.5.2
+    #     with:
+    #       repository: mtararujs/python-greetings
+    #       path: python-greetings
+
+    #   - name: Install Dependencies
+    #     uses: ./.github/actions/build
+    #     with:
+    #       working-directory: 'python-greetings'
+
+    #   - name: Deploy to Development Environment
+    #     uses: ./.github/actions/deploy
+    #     with:
+    #       working-directory: 'python-greetings'
+    #       app-port: '7001'
+    #       app-env: 'greetings-app-dev'
+
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Clone python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
+      - name: Stop existing service
+        run: |
+          source venv/bin/activate
+          pm2 delete greetings-app-dev || true
+        shell: bash
+        working-directory: python-greetings
+      
+      - name: Start server for Dev environment
+        run: |
+          source venv/bin/activate
+          pm2 start app.py --name greetings-app-dev -- --port 7001
+        shell: bash
+        working-directory: python-greetings 
+
+
+  deploy-to-staging:
+    name: deploy to staging
+    needs: deploy-to-dev
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Clone python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
+      - name: Stop existing service
+        run: |
+          source venv/bin/activate
+          pm2 delete greetings-app-staging || true
+        shell: bash
+        working-directory: python-greetings
+      
+      - name: Start server for staging environment
+        run: |
+          source venv/bin/activate
+          pm2 start app.py --name greetings-app-staging -- --port 7002
+        shell: bash
+        working-directory: python-greetings 
+
+  deploy-to-preprod:
+    name: deploy to preprod
+    needs: deploy-to-staging
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Clone python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
+      - name: Stop existing service
+        run: |
+          source venv/bin/activate
+          pm2 delete greetings-app-preprod || true
+        shell: bash
+        working-directory: python-greetings
+      
+      - name: Start server for preprod environment
+        run: |
+          source venv/bin/activate
+          pm2 start app.py --name greetings-app-preprod -- --port 7003
+        shell: bash
+        working-directory: python-greetings 
+
+
+  deploy-to-prod:
+    name: deploy to prod
+    needs: deploy-to-preprod
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
+
+      - name: Clone python-greetings repository
+        uses: actions/checkout@v3.5.2
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: python-greetings
+        shell: bash
+
+      - name: Stop existing service
+        run: |
+          source venv/bin/activate
+          pm2 delete greetings-app-prod || true
+        shell: bash
+        working-directory: python-greetings
+      
+      - name: Start server for prod environment
+        run: |
+          source venv/bin/activate
+          pm2 start app.py --name greetings-app-prod -- --port 7004
+        shell: bash
+        working-directory: python-greetings 
