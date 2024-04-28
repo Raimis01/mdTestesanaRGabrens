@@ -1,9 +1,10 @@
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - name: ... build success ...
-      run: echo Start to deploy to dev ..
+    - name: Setup Python environment and dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.tx
       shell: bash
-    - name: install dependencies
-      run: npm install
-      shell: bash
+      working-directory: ${{ inputs.working-directory }}

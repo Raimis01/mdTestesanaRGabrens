@@ -1,35 +1,16 @@
-inputs:
-  port:
-    description: 'Port for node app to run'
-    default: 1010
-  environment:
-    description: 'Env for node app'
-    default: 'DEV'
-
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - name: ... build success ...
-      run: echo Start to deploy to ${{ inputs.enviroment }} ..
+    - name: Stop existing service
+      run: |
+        source venv/bin/activate
+        pm2 delete ${{ inputs.app-env }} || true
       shell: bash
-      
-    - name: install dependencies
-      run: npm install
+      working-directory: ${{ inputs.working-directory }}
+
+    - name: Start server
+      run: |
+        source venv/bin/activate
+        pm2 start app.py --name ${{ inputs.app-env }} -- --port ${{ inputs.app-port }}
       shell: bash
-
-    - name: Install pm2
-      run: sudo npm install -g pm2
-      shell: bash
-
-
-    # - name: Delete services
-    #   run: pm2 delete ${{ inputs.enviroment }}
-    #   shell: bash
-
-    - name: Start services
-      run: pm2 start -n ${{ inputs.enviroment }} index.js -- ${{ inputs.port }}
-      shell: bash
-
-    - name: Check services
-      run: pm2 list
-      shell: bash
+      working-directory: ${{ inputs.working-directory }}
