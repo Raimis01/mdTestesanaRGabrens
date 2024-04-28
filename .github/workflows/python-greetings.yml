@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  setuppyt:
-    name: install pip dependencies1
+  install-pip-deps:
+    name: install pip dependencies
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
@@ -36,21 +36,7 @@ jobs:
           pip install -r requirements.txt
         working-directory: python-greetings
         shell: bash
-
-  install-pip-deps:
-    needs: setuppyt
-    name: install pip dependencies
-    runs-on: self-hosted
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v3.5.2
-        # with:
-        #   ref: 'main'
-
-
-      
-
-      
+  
 
   deploy-to-dev:
     name: deploy to dev
@@ -67,9 +53,7 @@ jobs:
           path: python-greetings
 
       - name: Stop existing service
-        run: |
-          pm2 delete greetings-app-dev
-          if (-not $?) { Exit 0 }
+        run: pm2 delete greetings-app-staging || true
         shell: bash
         working-directory: python-greetings
       
