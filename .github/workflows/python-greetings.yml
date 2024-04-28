@@ -17,11 +17,7 @@ jobs:
         # with:
         #   ref: 'main'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'  # Aizstāj ar savu Python versiju
-    
+
       - name: Create and activate virtual environment
         run: |
           python -m venv venv
