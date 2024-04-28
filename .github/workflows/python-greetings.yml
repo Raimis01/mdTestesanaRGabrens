@@ -52,7 +52,7 @@ jobs:
 
       - name: Start server for Dev environment
         run: pm2 start app.py --name greetings-app-dev -- --port 7001
-        shell: pwsh
+        shell: bash
         working-directory: python-greetings
       
     
