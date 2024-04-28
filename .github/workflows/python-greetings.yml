@@ -46,11 +46,11 @@ jobs:
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
-      - name: Clone python-greetings repository
-        uses: actions/checkout@v3.5.2
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
+      # - name: Clone python-greetings repository
+      #   uses: actions/checkout@v3.5.2
+      #   with:
+      #     repository: mtararujs/python-greetings
+      #     path: python-greetings
 
       - name: Stop existing service
         run: pm2 delete greetings-app-staging || true
