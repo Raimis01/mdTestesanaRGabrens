@@ -71,6 +71,9 @@ jobs:
     name: tests on dev
     needs: deploy-to-dev
     runs-on: self-hosted
+    env:
+      NODE_ENV: development
+      URL: http://localhost:7001
     steps:
       # - name: Checkout main repository
       #   uses: actions/checkout@v3.5.2
@@ -116,14 +119,19 @@ jobs:
         shell: bash
         working-directory: course-js-api-framework
       
+      # - name: Run tests for Dev environment
+      #   run: |
+      #     export NODE_ENV=development
+      #     export URL=http://localhost:7001
+      #     npm run greetings
+      #   env:
+      #     NODE_ENV: development
+      #     URL: http://localhost:7001
+      #   working-directory: course-js-api-framework
+
       - name: Run tests for Dev environment
         run: |
-          export NODE_ENV=development
-          export URL=http://localhost:7001
           npm run greetings
-        env:
-          NODE_ENV: development
-          URL: http://localhost:7001
         working-directory: course-js-api-framework
       
         
