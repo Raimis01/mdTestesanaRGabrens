@@ -9,7 +9,7 @@ on:
 
 jobs:
   setuppyt:
-    name: install pip dependencies
+    name: install pip dependencies1
     runs-on: self-hosted
     steps:
       - name: Checkout main repository
@@ -21,6 +21,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+        working-directory: python-greetings
 
   install-pip-deps:
     needs: setuppyt
