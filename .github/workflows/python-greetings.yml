@@ -59,9 +59,15 @@ jobs:
       
 
       - name: Start server for Dev environment
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: pm2 start app.py --name greetings-app-dev --restart-delay=5000 --max-restarts=5 -- --port 7001
+  
         shell: bash
         working-directory: python-greetings
+
+      - name: Check PM2 logs
+        run: pm2 logs greetings-app-dev
+        working-directory: python-greetings
+      
       
     
 
