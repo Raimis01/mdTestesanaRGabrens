@@ -55,7 +55,7 @@ jobs:
       - name: Stop existing service
         run: |
           source venv/bin/activate
-          pm2 delete greetings-app-staging || true
+          pm2 delete greetings-app-dev || true
         shell: bash
         working-directory: python-greetings
       
@@ -75,8 +75,8 @@ jobs:
       NODE_ENV: development
       URL: http://localhost:7001
     steps:
-      # - name: Checkout main repository
-      #   uses: actions/checkout@v3.5.2
+      - name: Checkout main repository
+        uses: actions/checkout@v3.5.2
   
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
@@ -95,7 +95,7 @@ jobs:
       - name: Stop existing service
         run: |
           source venv/bin/activate
-          pm2 delete greetings-app-staging || true
+          pm2 delete greetings-app-dev || true
         shell: bash
         working-directory: python-greetings
       
