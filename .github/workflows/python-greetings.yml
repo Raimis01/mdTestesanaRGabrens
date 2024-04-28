@@ -49,7 +49,7 @@ jobs:
       - name: Clone python-greetings repository
         uses: actions/checkout@v3.5.2
         with:
-          # repository: mtararujs/python-greetings
+          repository: mtararujs/python-greetings
           path: python-greetings
 
       - name: Stop existing service
