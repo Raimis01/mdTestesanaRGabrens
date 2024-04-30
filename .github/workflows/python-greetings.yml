@@ -82,7 +82,7 @@ jobs:
         working-directory: python-greetings
       
       - name: Start server for Dev environment
-        run: pm2 start app.py --name greetings-app-dev -- --port 3000
+        run: pm2 start app.py --name greetings-app-dev -- -- --port 3000
         shell: pwsh
         working-directory: python-greetings 
 
