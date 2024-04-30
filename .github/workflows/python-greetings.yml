@@ -21,7 +21,7 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      ### prieks linux vides
+      ### prieks manas linux vides datora
       # - name: Install dependencies
       #   run: |
       #     python -m venv venv
@@ -42,6 +42,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
+
+      - name: Setup PM2 environment
+        run: echo "PM2_HOME=$HOME/.pm2" >> $GITHUB_ENV
+        shell: pwsh
+        
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
@@ -51,7 +56,7 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      ### prieks linux vides
+      ### prieks manas linux vides datora
       # - name: Install dependencies
       #   run: |
       #     python -m venv venv
@@ -74,13 +79,6 @@ jobs:
       #   shell: bash
       #   working-directory: python-greetings 
 
-
-      
-      # - name: Install dependencies
-      #   run: pip install -r requirements.txt
-      #   working-directory: python-greetings
-      #   shell: pwsh
-
       - name: Stop existing service
         run: |
           pm2 delete greetings-app-dev 2>$null
@@ -98,6 +96,11 @@ jobs:
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
+
+      - name: Setup PM2 environment
+        run: echo "PM2_HOME=$HOME/.pm2" >> $GITHUB_ENV
+        shell: pwsh
+
       - name: Checkout pipeline definitions
         uses: actions/checkout@v3.5.2
 
@@ -123,7 +126,9 @@ jobs:
         working-directory: course-js-api
 
       - name: Run tests for dev environment
-        run: npm run greetings || echo "Tests failed, but workflow continues."
+        run: |
+          npm run greetings
+          $LastExitCode = 0
         working-directory: course-js-api
 
 
