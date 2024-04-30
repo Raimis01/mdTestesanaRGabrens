@@ -80,7 +80,9 @@ jobs:
         shell: pwsh
 
       - name: Stop existing service
-        run: pm2 delete greetings-app-dev 2>$null || $true
+        run: |
+          pm2 delete greetings-app-dev 2>$null
+          $LastExitCode = 0
         shell: pwsh
         working-directory: python-greetings
       
