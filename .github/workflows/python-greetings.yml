@@ -21,7 +21,7 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      ### prieks manas linux vides datora
+      ### prieks mana linux vides datora
       # - name: Install dependencies
       #   run: |
       #     python -m venv venv
@@ -42,11 +42,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-
-      - name: Setup PM2 environment
-        run: echo "PM2_HOME=$HOME/.pm2" >> $GITHUB_ENV
-        shell: pwsh
-        
       - name: Checkout main repository
         uses: actions/checkout@v3.5.2
 
@@ -56,7 +51,7 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      ### prieks manas linux vides datora
+      ### prieks mana linux vides datora
       # - name: Install dependencies
       #   run: |
       #     python -m venv venv
@@ -87,7 +82,7 @@ jobs:
         working-directory: python-greetings
       
       - name: Start server for Dev environment
-        run: pm2 start app.py --name greetings-app-dev
+        run: pm2 start app.py --name greetings-app-dev --port 7001
         shell: pwsh
         working-directory: python-greetings 
 
@@ -96,10 +91,6 @@ jobs:
     needs: deploy-to-dev
     runs-on: self-hosted
     steps:
-
-      - name: Setup PM2 environment
-        run: echo "PM2_HOME=$HOME/.pm2" >> $GITHUB_ENV
-        shell: pwsh
 
       - name: Checkout pipeline definitions
         uses: actions/checkout@v3.5.2
@@ -115,15 +106,10 @@ jobs:
         run: npm install
         working-directory: course-js-api
 
+      ### prieks mana linux vides datora
       # - name: Run tests for dev environment
       #   run: npm run greetings || echo "Tests failed, but workflow continues."
       #   working-directory: course-js-api
-
-
-      - name: Check current running services
-        run: pm2 list
-        shell: pwsh
-        working-directory: course-js-api
 
       - name: Run tests for dev environment
         run: |
