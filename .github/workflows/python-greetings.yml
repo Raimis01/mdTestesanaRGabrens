@@ -107,7 +107,8 @@ jobs:
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
         with:
-          repository: mtararujs/course-js-api-framework
+          # repository: mtararujs/course-js-api-framework
+          repository: Raimis01/course-js-api-framework
           path: course-js-api
 
       - name: Install Node.js dependencies
