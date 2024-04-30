@@ -80,7 +80,9 @@ jobs:
         shell: pwsh
 
       - name: Stop existing service
-        run: pm2 delete greetings-app-dev || true
+        run: |
+          pm2 delete greetings-app-dev
+          if ($LASTEXITCODE -ne 0) { $null }
         shell: pwsh
         working-directory: python-greetings
       
@@ -88,6 +90,11 @@ jobs:
         run: pm2 start app.py --name greetings-app-dev -- --port 3000
         shell: pwsh
         working-directory: python-greetings 
+
+      - name: Check current running services
+        run: pm2 list
+        shell: pwsh
+        working-directory: python-greetings
 
   test-on-dev:
     name: test on dev
