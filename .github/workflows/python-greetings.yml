@@ -115,9 +115,20 @@ jobs:
         run: npm install
         working-directory: course-js-api
 
+      # - name: Run tests for dev environment
+      #   run: npm run greetings || echo "Tests failed, but workflow continues."
+      #   working-directory: course-js-api
+
+
+      - name: Check current running services
+        run: pm2 list
+        shell: pwsh
+        working-directory: python-greetings
+
       - name: Run tests for dev environment
         run: npm run greetings || echo "Tests failed, but workflow continues."
         working-directory: course-js-api
+
 
   # deploy-to-staging:
   #   name: deploy to staging
