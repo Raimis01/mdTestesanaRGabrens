@@ -115,7 +115,7 @@ jobs:
         working-directory: course-js-api
 
       - name: Run tests for dev environment
-        run: npm run greetings greetings_dev || echo "Tests failed, but workflow continues."
+        run: npm run greetings || echo "Tests failed, but workflow continues."
         working-directory: course-js-api
 
   # deploy-to-staging:
