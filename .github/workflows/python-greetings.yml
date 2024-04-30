@@ -74,10 +74,12 @@ jobs:
       #   shell: bash
       #   working-directory: python-greetings 
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        working-directory: python-greetings
-        shell: pwsh
+
+      
+      # - name: Install dependencies
+      #   run: pip install -r requirements.txt
+      #   working-directory: python-greetings
+      #   shell: pwsh
 
       - name: Stop existing service
         run: |
@@ -91,11 +93,6 @@ jobs:
         shell: pwsh
         working-directory: python-greetings 
 
-      - name: Check current running services
-        run: pm2 list
-        shell: pwsh
-        working-directory: python-greetings
-
   test-on-dev:
     name: test on dev
     needs: deploy-to-dev
@@ -107,8 +104,8 @@ jobs:
       - name: Clone course-js-api-framework repository
         uses: actions/checkout@v3.5.2
         with:
-          # repository: mtararujs/course-js-api-framework
-          repository: Raimis01/course-js-api-framework
+          repository: mtararujs/course-js-api-framework
+          # repository: Raimis01/course-js-api-framework
           path: course-js-api
 
       - name: Install Node.js dependencies
@@ -123,7 +120,7 @@ jobs:
       - name: Check current running services
         run: pm2 list
         shell: pwsh
-        working-directory: python-greetings
+        working-directory: course-js-api
 
       - name: Run tests for dev environment
         run: npm run greetings || echo "Tests failed, but workflow continues."
