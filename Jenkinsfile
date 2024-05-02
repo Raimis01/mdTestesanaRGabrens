@@ -12,7 +12,7 @@ pipeline {
                 script {
                     cloneRepository(env.REPO_URL_PYTHON)
                     bat "dir"
-                    bat "pip install -r requirements.txt"
+                    bat "pip3 install -r requirements.txt"
                 }
             }
         }
