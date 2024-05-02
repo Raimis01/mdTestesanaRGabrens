@@ -1,30 +1,36 @@
 pipeline {
     agent any
-    environment {
+    // environment {
 
-        PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
-        HOME = "C:\\Users\\Raymond"
+    //     PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
+    //     HOME = "C:\\Users\\Raymond"
     
-    }
+    // }
 
     stages {
         stage('install-pip-deps') {
             steps {
+                script{
 
-                build()
+                    build()
+                }
             }
         }
 
         stage('deploy-to-dev') {
             steps {
-                deploy("dev", 7001)
+                script{
+                    deploy("dev", 7001)
+                }
             }
         }
 
 
         stage('tests-on-dev') {
             steps {
-                test("dev")
+                script{
+                    test("dev")
+                }
             }
         }
 
