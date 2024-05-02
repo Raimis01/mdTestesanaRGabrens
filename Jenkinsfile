@@ -8,7 +8,7 @@ pipeline {
                 bat 'git clone https://github.com/mtararujs/python-greetings'
                 dir('python-greetings') {
                     bat 'dir'
-                    bat 'pip3 install -r requirements.txt'
+                    bat '"C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip3" install -r requirements.txt'
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline {
         stage('deploy-to-dev') {
             steps {
                 echo 'Deploying to development environment...'
-                bat 'git clone https://github.com/mtararujs/python-greetings'
+                // bat 'git clone https://github.com/mtararujs/python-greetings'
                 bat 'pm2 delete greetings-app-dev || EXIT /B 0'
                 bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
             }
