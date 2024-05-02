@@ -84,7 +84,7 @@ pipeline {
 
 
 def build(){
-    echo 'Cloning repository and installing dependencies...'
+    echo 'Cloning both repositories and installing dependencies'
     bat 'git clone https://github.com/Raimis01/python-greetings'
     dir('python-greetings') {
         bat 'dir'
@@ -97,14 +97,14 @@ def build(){
     }
 }
 def deploy(String env, int port){
-    echo "Start to deploy to ${env}"
+    echo "Start to deploy to ${env} environment"
     dir('python-greetings') {
         bat "pm2 delete greetings-app-${env} || EXIT /B 0"
         bat "pm2 start app.py --name greetings-app-${env} -- -port ${port}"
     }
 }
 def test(String env){
-    echo "Starting tests on ${env} environment."
+    echo "Starting tests on ${env} environment"
     dir('course-js-api-framework') {
         bat "set NODE_ENV=greetings_${env} && npm run greetings greetings_${env}"
     }
