@@ -35,7 +35,7 @@ pipeline {
         stage('deploy-to-staging') {
             steps {
                 script{
-                    deploy("staging", 7002)
+                    deploy("stg", 7002)
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('tests-on-staging') {
             steps {
                 script{
-                    test("staging")
+                    test("stg")
                 }
             }
         }
