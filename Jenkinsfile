@@ -11,7 +11,9 @@ pipeline {
         stage('install-pip-deps') {
             steps {
                 echo 'Cloning repository and installing dependencies...'
-                bat 'git clone https://github.com/mtararujs/python-greetings'
+                // bat 'git clone https://github.com/mtararujs/python-greetings'
+                bat 'git clone --branch 4e911440a9886c7c26ccbb4eb55f0bc2a5067b51 https://github.com/mtararujs/python-greetings'
+        
                 dir('python-greetings') {
                     bat 'dir'
                     bat 'pip3 install -r requirements.txt'
