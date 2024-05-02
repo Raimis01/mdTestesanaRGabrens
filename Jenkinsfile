@@ -90,6 +90,11 @@ def build(){
         bat 'dir'
         bat 'pip3 install -r requirements.txt'
     }
+
+    bat 'git clone https://github.com/mtararujs/course-js-api-framework'
+    dir('course-js-api-framework') {
+        bat 'npm install'
+    }
 }
 def deploy(String env, int port){
     echo "Start to deploy to ${env}"
@@ -100,9 +105,9 @@ def deploy(String env, int port){
 }
 def test(String env){
     echo "Starting tests on ${env} environment."
-    bat 'git clone https://github.com/mtararujs/course-js-api-framework'
+    // bat 'git clone https://github.com/mtararujs/course-js-api-framework'
     dir('course-js-api-framework') {
-        bat 'npm install'
+        // bat 'npm install'
         bat "set NODE_ENV=greetings_${env} && npm run greetings greetings_${env}"
     }
 }
