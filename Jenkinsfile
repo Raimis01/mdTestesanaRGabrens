@@ -1,103 +1,83 @@
 pipeline {
     agent any
 
-    environment {
-        REPO_URL_PYTHON = "https://github.com/mtararujs/python-greetings"
-        REPO_URL_JS = "https://github.com/Raimis01/course-js-api-framework"
-    }
-
     stages {
-        stage('Install pip dependencies') {
+        stage('install-pip-deps') {
             steps {
-                script {
-                    cloneRepository(env.REPO_URL_PYTHON)
-                    bat "dir"
-                    bat "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip3 install -r requirements.txt"
+                echo 'Cloning repository and installing dependencies...'
+                bat 'git clone https://github.com/mtararujs/python-greetings'
+                dir('python-greetings') {
+                    bat 'dir'
+                    bat 'pip3 install -r requirements.txt'
                 }
             }
         }
 
-        stage('Deploy to DEV') {
+        stage('deploy-to-dev') {
             steps {
-                script {
-                    deployApp('dev', 7001)
-                }
-            }
-        }
-        stage('Tests on DEV') {
-            steps {
-                script {
-                    runTests('dev')
-                }
+                echo 'Deploying to development environment...'
+                bat 'git clone https://github.com/mtararujs/python-greetings'
+                bat 'pm2 delete greetings-app-dev || EXIT /B 0'
+                bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
             }
         }
 
-        stage('Deploy to Staging') {
+        stage('tests-on-dev') {
             steps {
-                script {
-                    deployApp('staging', 7002)
-                }
-            }
-        }
-        stage('Tests on Staging') {
-            steps {
-                script {
-                    runTests('staging')
-                }
+                echo 'Running tests on development environment...'
+                // Add commands to run tests here
             }
         }
 
-        stage('Deploy to PreProd') {
+        stage('deploy-to-staging') {
             steps {
-                script {
-                    deployApp('preprod', 7003)
-                }
-            }
-        }
-        stage('Tests on PreProd') {
-            steps {
-                script {
-                    runTests('preprod')
-                }
+                echo 'Deploying to staging environment...'
+                bat 'pm2 delete greetings-app-staging || EXIT /B 0'
+                bat 'pm2 start app.py --name greetings-app-staging -- --port 7002'
             }
         }
 
-        stage('Deploy to Prod') {
+        stage('tests-on-staging') {
             steps {
-                script {
-                    deployApp('prod', 7004)
-                }
+                echo 'Running tests on staging environment...'
+                // Add commands to run tests here
             }
         }
-        stage('Tests on Prod') {
+
+        stage('deploy-to-preprod') {
             steps {
-                script {
-                    runTests('prod')
-                }
+                echo 'Deploying to pre-production environment...'
+                bat 'pm2 delete greetings-app-preprod || EXIT /B 0'
+                bat 'pm2 start app.py --name greetings-app-preprod -- --port 7003'
+            }
+        }
+
+        stage('tests-on-preprod') {
+            steps {
+                echo 'Running tests on pre-production environment...'
+                // Add commands to run tests here
+            }
+        }
+
+        stage('deploy-to-prod') {
+            steps {
+                echo 'Deploying to production environment...'
+                bat 'pm2 delete greetings-app-prod || EXIT /B 0'
+                bat 'pm2 start app.py --name greetings-app-prod -- --port 7004'
+            }
+        }
+
+        stage('tests-on-prod') {
+            steps {
+                echo 'Running tests on production environment...'
+                // Add commands to run tests here
             }
         }
     }
-}
 
-def cloneRepository(String repoUrl) {
-    echo "Cloning repository from ${repoUrl}"
-    bat "git clone ${repoUrl}"
-}
-
-def installDeps() {
-    echo 'Installing dependencies'
-    bat "npm install"
-}
-
-def deployApp(String env, int port) {
-    echo "Deploying to ${env} environment on port ${port}"
-    bat "pm2 delete greetings-app-${env} || exit 0"
-    bat "pm2 start app.py --name greetings-app-${env} -- --port ${port}"
-}
-
-def runTests(String env) {
-    echo "Running tests on ${env} environment"
-    cloneRepository(env.REPO_URL_JS)
-    installDeps()
-    bat "npm run greetings greetings_${env}"
+    post {
+        always {
+            echo 'Pipeline execution is complete.'
+        }
+    }
 }
