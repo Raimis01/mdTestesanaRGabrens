@@ -56,7 +56,10 @@ pipeline {
                 dir('course-js-api-framework') {
                     bat 'npm install'
                     // Set the NODE_ENV environment variable to specify the environment for the tests
-                    bat 'set NODE_ENV=greetings_dev && npm run greetings'
+                    bat '''
+                    set NODE_ENV=greetings_dev
+                    npm run greetings
+                    '''
                 }
             }
         }
