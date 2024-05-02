@@ -30,6 +30,13 @@ pipeline {
             }
         }
 
+        stage('pm2-list') {
+            steps {
+                bat 'pm2 list'
+                
+            }
+        }
+
         stage('tests-on-dev') {
             steps {
                 echo 'Running tests on development environment...'
