@@ -30,16 +30,15 @@ pipeline {
             }
         }
 
-        stage('pm2-list') {
+        stage('check-port') {
             steps {
                 script {
-                    // Use bat to run pm2 list and capture output
-                    def pm2Output = bat(script: 'pm2 list', returnStdout: true).trim()
-                    // Check the output for a specific app name or other identifiers that imply it runs on port 7001
-                    if (pm2Output.contains("greetings-app-dev") && pm2Output.contains("7001")) {
-                        echo 'Process is running on port 7001'
+                    def output = bat(script: 'netstat -ano | findstr :7001', returnStdout: true).trim()
+                    if (output.isEmpty()) {
+                        echo 'Port 7001 is not in use'
                     } else {
-                        echo 'No process found on port 7001'
+                        echo 'Something is running on port 7001'
+                        echo output
                     }
                 }
             }
