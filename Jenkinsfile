@@ -30,27 +30,33 @@ pipeline {
             }
         }
 
-        stage('check-port') {
-            steps {
-                script {
-                    def output = bat(script: 'netstat -ano | findstr :7001', returnStdout: true).trim()
-                    if (output.isEmpty()) {
-                        echo 'Port 7001 is not in use'
-                    } else {
-                        echo 'Something is running on port 7001'
-                        echo output
-                    }
-                }
-            }
-        }
+        // stage('check-port') {
+        //     steps {
+        //         script {
+        //             def output = bat(script: 'netstat -ano | findstr :7001', returnStdout: true).trim()
+        //             if (output.isEmpty()) {
+        //                 echo 'Port 7001 is not in use'
+        //             } else {
+        //                 echo 'Something is running on port 7001'
+        //                 echo output
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('tests-on-dev') {
             steps {
                 echo 'Running tests on development environment...'
                 bat 'git clone https://github.com/Raimis01/course-js-api-framework'
+                // dir('course-js-api-framework') {
+                //     bat 'npm install'
+                //     bat 'npm run greetings greetings_dev'
+                // }
+
                 dir('course-js-api-framework') {
                     bat 'npm install'
-                    bat 'npm run greetings greetings_dev'
+                    // Set the NODE_ENV environment variable to specify the environment for the tests
+                    bat 'set NODE_ENV=greetings_dev && npm run greetings'
                 }
             }
         }
