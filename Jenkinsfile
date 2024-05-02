@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+
+        PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
+    }
 
     stages {
         stage('install-pip-deps') {
@@ -8,7 +12,7 @@ pipeline {
                 bat 'git clone https://github.com/mtararujs/python-greetings'
                 dir('python-greetings') {
                     bat 'dir'
-                    bat '"C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip3" install -r requirements.txt'
+                    bat 'pip3 install -r requirements.txt'
                 }
             }
         }
@@ -16,7 +20,6 @@ pipeline {
         stage('deploy-to-dev') {
             steps {
                 echo 'Deploying to development environment...'
-                // bat 'git clone https://github.com/mtararujs/python-greetings'
                 bat 'pm2 delete greetings-app-dev || EXIT /B 0'
                 bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
             }
