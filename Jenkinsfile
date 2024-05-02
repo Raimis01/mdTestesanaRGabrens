@@ -3,6 +3,8 @@ pipeline {
     environment {
 
         PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
+        HOME = "C:\\Users\\Raymond" // Aizstājiet ar jūsu sistēmas atbilstošo mājas direktoriju
+    
     }
 
     stages {
@@ -21,7 +23,9 @@ pipeline {
             steps {
                 echo 'Deploying to development environment...'
                 bat 'pm2 delete greetings-app-dev || EXIT /B 0'
-                bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
+                // bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
+                bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-dev -- --port 7001'
+
             }
         }
 
