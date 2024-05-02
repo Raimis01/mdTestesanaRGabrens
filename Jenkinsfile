@@ -105,8 +105,12 @@ def build(){
 }
 def deploy(String env, int port){
     echo "Start to deploy to ${env}"
-    bat "pm2 delete greetings-app-\"${env}\" || EXIT /B 0"
-    bat "pm2 start app.py --name greetings-app-\"${env}\" -- --port \"${port}\""
+    // bat "pm2 delete greetings-app-\"${env}\" || EXIT /B 0"
+    // bat "pm2 start app.py --name greetings-app-\"${env}\" -- --port \"${port}\""
+
+    bat "pm2 delete greetings-app-${env} || EXIT /B 0"
+    // Correcting the port argument to use '-port' as defined in your Python script
+    bat "pm2 start app.py --name greetings-app-${env} -- -port ${port}"
 
 }
 def test(String env){
