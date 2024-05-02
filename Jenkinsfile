@@ -10,23 +10,25 @@ pipeline {
     stages {
         stage('install-pip-deps') {
             steps {
-                echo 'Cloning repository and installing dependencies...'
-                bat 'git clone https://github.com/Raimis01/python-greetings'
-                // bat 'git clone --branch 4e911440a9886c7c26ccbb4eb55f0bc2a5067b51 https://github.com/mtararujs/python-greetings'
+                // echo 'Cloning repository and installing dependencies...'
+                // bat 'git clone https://github.com/Raimis01/python-greetings'
+                // // bat 'git clone --branch 4e911440a9886c7c26ccbb4eb55f0bc2a5067b51 https://github.com/mtararujs/python-greetings'
         
-                dir('python-greetings') {
-                    bat 'dir'
-                    bat 'pip3 install -r requirements.txt'
-                }
+                // dir('python-greetings') {
+                //     bat 'dir'
+                //     bat 'pip3 install -r requirements.txt'
+                // }
+
+                build()
             }
         }
 
         stage('deploy-to-dev') {
             steps {
-                echo 'Deploying to development environment...'
-                bat 'pm2 delete greetings-app-dev || EXIT /B 0'
-                bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-dev -- --port 7001'
-
+                // echo 'Deploying to development environment...'
+                // bat 'pm2 delete greetings-app-dev || EXIT /B 0'
+                // bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-dev -- --port 7001'
+                deploy("dev", 7001)
             }
         }
 
@@ -46,21 +48,23 @@ pipeline {
 
         stage('tests-on-dev') {
             steps {
-                echo 'Running tests on development environment...'
-                bat 'git clone https://github.com/Raimis01/course-js-api-framework'
+                // echo 'Running tests on development environment...'
+                // bat 'git clone https://github.com/Raimis01/course-js-api-framework'
+                // // dir('course-js-api-framework') {
+                // //     bat 'npm install'
+                // //     bat 'npm run greetings greetings_dev'
+                // // }
+
                 // dir('course-js-api-framework') {
                 //     bat 'npm install'
-                //     bat 'npm run greetings greetings_dev'
+                //     // Set the NODE_ENV environment variable to specify the environment for the tests
+                //     bat '''
+                //     set NODE_ENV=greetings_dev
+                //     npm run greetings
+                //     '''
                 // }
 
-                dir('course-js-api-framework') {
-                    bat 'npm install'
-                    // Set the NODE_ENV environment variable to specify the environment for the tests
-                    bat '''
-                    set NODE_ENV=greetings_dev
-                    npm run greetings
-                    '''
-                }
+                test("dev")
             }
         }
 
@@ -120,5 +124,53 @@ pipeline {
                 }
             }
         }
+    }
+}
+
+
+def build(){
+    // echo 'Start to build node app'
+    // bat "dir"
+    // bat "npm -v"
+    // bat "npm install"
+
+    echo 'Cloning repository and installing dependencies...'
+    bat 'git clone https://github.com/Raimis01/python-greetings'
+    // bat 'git clone --branch 4e911440a9886c7c26ccbb4eb55f0bc2a5067b51 https://github.com/mtararujs/python-greetings'
+
+    dir('python-greetings') {
+        bat 'dir'
+        bat 'pip3 install -r requirements.txt'
+    }
+}
+def deploy(String env, int port){
+    // echo "Start to deploy to ${env}"
+    // bat "pm2 delete ${env}"
+    // bat "pm2 start -n \"${env}\" index.js -- \"${port}\""
+
+
+    echo "Start to deploy to ${env}"
+    bat "pm2 delete greetings-app-\"${env}\" || EXIT /B 0"
+    bat "pm2 start app.py --name greetings-app-\"${env}\" --port \"${port}\""
+
+}
+def test(String env){
+    // echo "Start to test on ${env}"
+    // bat "npm test"
+
+    echo "Start to test on ${env}"
+    bat 'git clone https://github.com/Raimis01/course-js-api-framework'
+    // dir('course-js-api-framework') {
+    //     bat 'npm install'
+    //     bat 'npm run greetings greetings_dev'
+    // }
+
+    dir('course-js-api-framework') {
+        bat 'npm install'
+        // Set the NODE_ENV environment variable to specify the environment for the tests
+        bat '''
+        set NODE_ENV=greetings_dev
+        npm run greetings
+        '''
     }
 }
