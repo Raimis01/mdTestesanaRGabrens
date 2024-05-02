@@ -3,7 +3,7 @@ pipeline {
     environment {
 
         PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
-        HOME = "C:\\Users\\Raymond" // Aizstājiet ar jūsu sistēmas atbilstošo mājas direktoriju
+        HOME = "C:\\Users\\Raymond"
     
     }
 
@@ -23,7 +23,6 @@ pipeline {
             steps {
                 echo 'Deploying to development environment...'
                 bat 'pm2 delete greetings-app-dev || EXIT /B 0'
-                // bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
                 bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-dev -- --port 7001'
 
             }
@@ -40,7 +39,7 @@ pipeline {
             steps {
                 echo 'Deploying to staging environment...'
                 bat 'pm2 delete greetings-app-staging || EXIT /B 0'
-                bat 'pm2 start app.py --name greetings-app-staging -- --port 7002'
+                bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-staging -- --port 7002'
             }
         }
 
@@ -55,7 +54,7 @@ pipeline {
             steps {
                 echo 'Deploying to pre-production environment...'
                 bat 'pm2 delete greetings-app-preprod || EXIT /B 0'
-                bat 'pm2 start app.py --name greetings-app-preprod -- --port 7003'
+                bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-preprod -- --port 7003'
             }
         }
 
@@ -70,7 +69,7 @@ pipeline {
             steps {
                 echo 'Deploying to production environment...'
                 bat 'pm2 delete greetings-app-prod || EXIT /B 0'
-                bat 'pm2 start app.py --name greetings-app-prod -- --port 7004'
+                bat 'pm2 start C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\mdTestesana\\python-greetings\\app.py --name greetings-app-prod -- --port 7004'
             }
         }
 
@@ -79,12 +78,6 @@ pipeline {
                 echo 'Running tests on production environment...'
                 // Add commands to run tests here
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline execution is complete.'
         }
     }
 }
