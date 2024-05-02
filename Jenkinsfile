@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REPO_URL_PYTHON = "https://github.com/mtararujs/python-greetings"
-        REPO_URL_JS = "https://github.com/mtararujs/course-js-api-framework"
+        REPO_URL_JS = "https://github.com/Raimis01/course-js-api-framework"
     }
 
     stages {
@@ -12,7 +12,7 @@ pipeline {
                 script {
                     cloneRepository(env.REPO_URL_PYTHON)
                     bat "dir"
-                    bat "pip3 install -r requirements.txt"
+                    bat "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip3 install -r requirements.txt"
                 }
             }
         }
