@@ -32,8 +32,16 @@ pipeline {
 
         stage('pm2-list') {
             steps {
-                bat 'pm2 list'
-                
+                script {
+                    // Use bat to run pm2 list and capture output
+                    def pm2Output = bat(script: 'pm2 list', returnStdout: true).trim()
+                    // Check the output for a specific app name or other identifiers that imply it runs on port 7001
+                    if (pm2Output.contains("greetings-app-dev") && pm2Output.contains("7001")) {
+                        echo 'Process is running on port 7001'
+                    } else {
+                        echo 'No process found on port 7001'
+                    }
+                }
             }
         }
 
