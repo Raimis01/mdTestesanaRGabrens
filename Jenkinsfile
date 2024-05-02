@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
 
-        PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
+        PATH = "C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312;C:\\Users\\Raymond\\AppData\\Local\\Programs\\Python\\Python312\\Scripts;C:\\Program Files\\nodejs;C:\\Users\\Raymond\\AppData\\Roaming\\npm;${env.PATH}"
         HOME = "C:\\Users\\Raymond" // Aizstājiet ar jūsu sistēmas atbilstošo mājas direktoriju
     
     }
