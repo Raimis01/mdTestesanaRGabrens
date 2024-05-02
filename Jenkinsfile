@@ -32,8 +32,10 @@ pipeline {
             steps {
                 echo 'Running tests on development environment...'
                 bat 'git clone https://github.com/Raimis01/course-js-api-framework'
-                bat 'npm install'
-                bat 'npm run greetings greetings_dev'
+                dir('course-js-api-framework') {
+                    bat 'npm install'
+                    bat 'npm run greetings greetings_dev'
+                }
             }
         }
 
@@ -49,8 +51,10 @@ pipeline {
             steps {
                 echo 'Running tests on staging environment...'
                 bat 'git clone https://github.com/Raimis01/course-js-api-framework'
-                bat 'npm install'
-                bat 'npm run greetings greetings_staging'
+                dir('course-js-api-framework') {
+                    bat 'npm install'
+                    bat 'npm run greetings greetings_staging'
+                }
             }
         }
 
@@ -66,8 +70,10 @@ pipeline {
             steps {
                 echo 'Running tests on pre-production environment...'
                 bat 'git clone https://github.com/Raimis01/course-js-api-framework'
-                bat 'npm install'
-                bat 'npm run greetings greetings_preprod'
+                dir('course-js-api-framework') {
+                    bat 'npm install'
+                    bat 'npm run greetings greetings_preprod'
+                }
             }
         }
 
@@ -83,8 +89,10 @@ pipeline {
             steps {
                 echo 'Running tests on production environment...'
                 bat 'git clone https://github.com/Raimis01/course-js-api-framework'
-                bat 'npm install'
-                bat 'npm run greetings greetings_prod'
+                dir('course-js-api-framework') {
+                    bat 'npm install'
+                    bat 'npm run greetings greetings_prod'
+                }
             }
         }
     }
